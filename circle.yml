@@ -1,0 +1,15 @@
+machine:
+  pre:
+    - uname -a
+    - lsb_release -r
+    - cat /proc/version
+    - go version
+
+test:
+  pre:
+  override:
+    - make test
+    - make install
+    - GOOS=linux make clean build BUILD_DIR=${CIRCLE_ARTIFACTS}
+    - GOOS=darwin make clean build BUILD_DIR=${CIRCLE_ARTIFACTS}
+    - GOOS=windows make clean build BUILD_DIR=${CIRCLE_ARTIFACTS}
